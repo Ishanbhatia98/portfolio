@@ -20,7 +20,9 @@ const columns = canvas.width/fontSize;
 
 const rainDrops = [];
 
-let paused = false;
+// let paused = false;
+
+window.paused = false;
 
 for( let x = 0; x < columns; x++ ) {
     rainDrops[x] = 1;
@@ -57,7 +59,7 @@ toggleBtn.addEventListener('click', () => {
     paused = !paused;
 
     // Update icon
-    toggleBtn.textContent = paused ? '▶️' : '⏸';
+    toggleBtn.textContent = window.paused ? '▶️' : '⏸';
 
     if (!paused) {
         draw();

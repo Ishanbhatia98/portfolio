@@ -1,0 +1,103 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Blog — {{ user.full_name|default:"Author" }}</title>
+
+  <!-- reuse global navbar theme -->
+  <link rel="stylesheet" href="{% static 'style.css' %}">
+
+  <!-- page styles -->
+  <link rel="stylesheet" href="{% static 'css/blog.css' %}">
+</head>
+<body>
+  <!-- navbar reused from global style.css -->
+  <nav id="navbar" role="navigation" aria-label="Primary">
+    <ul class="nav-links">
+      <li><a href="{% url 'home' %}">Home</a></li>
+      <li><a href="{% url 'profile' %}">Profile</a></li>
+      <li><a href="{% url 'projects' %}">Projects</a></li>
+      <li><a href="{% url 'blog' %}">Blog</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- spacer -->
+  <div style="height:70px;"></div>
+
+  <main class="blog-page" role="main" aria-labelledby="blog-heading">
+    <div class="blog-header">
+      <h1 class="blog-title" id="blog-heading">Latest Articles</h1>
+
+      <!-- page_views variable to be provided by view -->
+      <div class="page-visits" aria-live="polite">
+        Page visits: <strong>{{ page_views|default:"—" }}</strong>
+      </div>
+    </div>
+
+    {% if posts %}
+
+    <section class="posts-list" aria-live="polite">
+      {% for post in posts %}
+        <article class="post-card" role="article" aria-labelledby="post-{{ forloop.counter }}-title">
+          <div class="post-meta">
+  
+            <h2 id="post-{{ forloop.counter }}-title" class="post-title">
+              <a href="#blogpost" style="text-decoration:none; color:inherit;">
+                {{ post.title }}
+              </a>
+            </h2>
+  
+            <div class="post-date">
+              {{ post.published_at|date:"F j, Y" }}
+            </div>
+  
+            <div class="post-summary">
+              {% if post.summary %}
+                {{ post.summary }}
+              {% else %}
+                {{ post.content|truncatechars:160 }}
+              {% endif %}
+            </div>
+  
+            <div class="post-actions">
+              <a class="cta" href="#blogpost3">Read full post</a>
+            </div>
+  
+          </div>
+        </article>
+      {% endfor %}
+    </section>
+  
+    {% else %}
+
+    <article class="post-card" role="article">
+      <div class="post-meta">
+  
+        <h2 class="post-title">
+          <a href="#blogpost" style="text-decoration:none; color:inherit;">
+            How I Built My Portfolio Website
+          </a>
+        </h2>
+  
+        <div class="post-date">2025-01-01</div>
+  
+        <div class="post-summary">
+          A behind-the-scenes write-up on how I designed and developed this portfolio —
+          from animations to backend logic and Django integrations.
+        </div>
+  
+        <div class="post-actions">
+          <a class="cta" href="{% url 'blog_post' 'dummy-post' %}">Read full post</a>
+        </div>
+  
+      </div>
+    </article>
+  
+  {% endif %}
+
+  </main>
+</body>
+</html>

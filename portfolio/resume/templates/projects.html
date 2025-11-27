@@ -1,26 +1,120 @@
-<!DOCTYPE html>
+{% load static %}
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Age Checker</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Projects — {{ user.full_name|default:"Your Name" }}</title>
+
+  <!-- global theme / navbar -->
+  <link rel="stylesheet" href="{% static 'style.css' %}">
+
+  <!-- page styles -->
+  <link rel="stylesheet" href="{% static 'projects.css' %}">
 </head>
 <body>
-    <h1>Welcome to the Age Checker</h1>
+  <!-- reuse global navbar styles from style.css (ensure style.css contains #navbar rules) -->
+  <nav id="navbar">
+    <ul class="nav-links">
+        <li><a href="{% url 'home' %}">Home</a></li> 
+        <li><a href="{% url 'profile' %}">Profile</a></li>
+        <li><a href="{% url 'projects' %}">Projects</a></li>
+        <li><a href="{% url 'contact' %}">Contact</a></li>
+    </ul>
+</nav>
 
-    <form method="post">
-        {% csrf_token %}
-        <label for="age">Enter your age:</label>
-        <input type="number" id="age" name="age" required>
-        <button type="submit">Check Age</button>
-    </form>
+  <!-- spacer so navbar doesn't cover content -->
+  <div style="height: 70px;"></div>
 
-    {% if age is not None %}
-        <p>Your age is: {{ age }}</p>
-        {% if age >= 20 %}
-            <p>You are an adult.</p>
+  <main class="projects-page" role="main">
+    <section class="projects-card" aria-labelledby="projects-heading">
+      <header class="projects-header">
+        <div>
+          <h1 id="projects-heading">Selected Projects</h1>
+          <div class="projects-sub">A concise snapshot of notable work — title, summary and links.</div>
+        </div>
+
+        <!-- optional action -->
+        <div class="small">
+          {% if projects %}Showing {{ projects|length }} project{{ projects|length|pluralize }}{% else %}No projects yet{% endif %}
+        </div>
+      </header>
+
+      {% if projects %}
+        <div class="projects-grid" aria-live="polite">
+          {% for project in projects %}
+            <article class="project" role="article" aria-labelledby="proj-{{ forloop.counter }}-title">
+              <div>
+                <div class="project-title">
+                  <h2 id="proj-{{ forloop.counter }}-title">{{ project.title }}</h2>
+                  {% if project.tags %}
+                    <div class="project-meta">{{ project.tags|join:", " }}</div>
+                  {% endif %}
+                </div>
+
+                <div class="project-desc">
+                  {% if project.description %}
+                    {{ project.description|safe }}
+                  {% else %}
+                    <em class="small">No description provided yet.</em>
+                  {% endif %}
+                </div>
+              </div>
+
+              <div>
+                <div class="project-links" aria-label="Project links">
+                  {% if project.links %}
+                    {% for link in project.links %}
+                      <a href="{{ link.url }}" target="_blank" rel="noopener noreferrer">
+                        {{ link.name }}
+                      </a>
+                    {% endfor %}
+                  {% else %}
+                    <span class="small">No links available</span>
+                  {% endif %}
+                </div>
+              </div>
+            </article>
+          {% endfor %}
+        </div>
+
         {% else %}
-            <p>You are not an adult.</p>
-        {% endif %}
-    {% endif %}
+        <div class="projects-grid">
+          <article class="project" role="article">
+            <div>
+              <div class="project-title">
+                <h2>Dummy Project Title</h2>
+              </div>
+      
+              <div class="project-desc">
+                This is a placeholder project. Once you add real projects through your ORM,
+                they will appear here automatically.
+              </div>
+            </div>
+      
+            <div>
+              <div class="project-links">
+                <a href="https://example.com" target="_blank" rel="noopener noreferrer">
+                  Example Link
+                </a>
+              </div>
+            </div>
+          </article>
+        </div>
+      {% endif %}
+
+      <div class="projects-footer">
+        <div class="projects-count">
+          {% if projects %}{{ projects|length }} project{{ projects|length|pluralize }}{% else %}0 projects{% endif %}
+        </div>
+
+        <div>
+          <!-- Placeholder: pagination or "Add project" button when admin available -->
+          <a href="#addproject" class="small" style="color:var(--muted); text-decoration:none;">Back</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
 </body>
 </html>

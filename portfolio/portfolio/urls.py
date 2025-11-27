@@ -16,7 +16,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from resume.views import home
+from resume.views import home, profile, projects, blog, contact
 
 # urlpatterns = [
 #     path('admin/', admin.site.urls),
@@ -25,7 +25,12 @@ from resume.views import home
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('simple/', home.simple_view),
-    path('condition/', home.check_age),
-    path('loop/', home.loop),
+    path('home/', home.home_view, name="home"),
+    path('profile/', profile.profile_view, name="profile"),
+    path('projects/', projects.project_view, name="projects"),
+    # path('blog/', blog.blog_view, name="blog"),
+    # path("post/<slug:post_id>/", blog.post_view, name="blog_post")
+    path('contact/', contact.contact_view, name="contact"),
+    path("contact/submit/", contact.contact_submit, name="contact_submit")
+
 ]

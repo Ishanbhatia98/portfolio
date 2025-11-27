@@ -1,0 +1,19 @@
+# resume/models_mongo.py
+from mongoengine import StringField, EmailField, DateTimeField, ListField, EmbeddedDocumentField, ReferenceField
+from shared.model.base import MongoBaseModel
+from datetime import datetime
+from .line_item import LineItem
+
+
+
+class School(MongoBaseModel):
+    meta = {'collection': 'school'}
+    name = StringField(required=True, max_length=100)
+    degree = StringField(default="")
+    start_date = DateTimeField()
+    end_date = DateTimeField()
+    description = ListField(ReferenceField(LineItem), default=[])
+
+    def __str__(self):
+        return self.name + " - " + self.degree
+    

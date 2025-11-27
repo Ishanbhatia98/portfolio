@@ -1,0 +1,184 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>{{ user.full_name|default:"Your Name" }} — Profile</title>
+    <link rel="stylesheet" href="{% static 'profile.css' %}">
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+<body>
+  <div class="page">
+    <nav id="navbar">
+        <ul class="nav-links">
+            <li><a href="{% url 'home' %}">Home</a></li> 
+            <li><a href="{% url 'profile' %}">Profile</a></li>
+            <li><a href="{% url 'projects' %}">Projects</a></li>
+            <li><a href="{% url 'contact' %}">Contact</a></li>
+        </ul>
+    </nav>
+    <div class="card">
+      <!-- Header -->
+      <div class="profile-header">
+        <div class="avatar" aria-hidden="true">
+          {% if user and user.initials %}
+            {{ user.initials }}
+          {% else %}
+            {{ user.full_name|default:"Y N"|slice:":2"|upper }}
+          {% endif %}
+        </div>
+
+        <div class="header-meta">
+          <div class="name-row">
+            <div class="full-name">{{ user.full_name|default:"Your Name" }}</div>
+            {% if user.location %}
+              <div class="small" style="color:var(--muted)">&middot; {{ user.location }}</div>
+            {% endif %}
+          </div>
+          <div class="title">{{ user.title|default:"Software Engineer" }}</div>
+
+          <div class="contact" aria-label="Contact information">
+            {% if user.email %}<div title="Email">{{ user.email }}</div>{% endif %}
+            {% if user.website %}<div><a href="{{ user.website }}" style="color: var(--accent); text-decoration:none;">Website</a></div>{% endif %}
+            {% if user.phone %}<div>{{ user.phone }}</div>{% endif %}
+          </div>
+        </div>
+      </div>
+
+      <!-- Content -->
+      <div class="grid">
+        <!-- LEFT -->
+        <aside class="side" role="complementary" aria-label="Profile sidebar">
+          <div>
+            <div class="section-title">About</div>
+            <div class="about">
+              {% if user.summary %}
+                {{ user.summary }}
+              {% else %}
+                Passionate software developer focused on building robust, maintainable microservices and elegant user experiences. Skilled in Python, FastAPI, and productionizing machine learning systems.
+              {% endif %}
+            </div>
+          </div>
+
+          <div>
+            <div class="section-title">Skills</div>
+            <div class="skills" aria-label="Skills">
+              {% if skills %}
+                {% for s in skills %}
+                  <div class="skill">{{ s.name }}</div>
+                {% endfor %}
+              {% else %}
+                <!-- Placeholder badges -->
+                <div class="skill">Python</div>
+                <div class="skill">FastAPI</div>
+                <div class="skill">Docker</div>
+                <div class="skill">Postgres</div>
+                <div class="skill">Testing</div>
+              {% endif %}
+            </div>
+          </div>
+
+          <div>
+            <div class="section-title">Quick Links</div>
+            <div class="small">
+              {% if user.linkedin %}<div><a href="{{ user.linkedin }}" style="color:var(--muted)">LinkedIn</a></div>{% endif %}
+              {% if user.github %}<div><a href="{{ user.github }}" style="color:var(--muted)">GitHub</a></div>{% endif %}
+            </div>
+          </div>
+        </aside>
+
+        <!-- RIGHT -->
+        <main class="main" role="main">
+          <!-- Education -->
+          <section class="block" aria-labelledby="education-heading">
+            <div class="section-title" id="education-heading">Education</div>
+
+            {% if education %}
+              {% for e in education %}
+                <div class="item">
+                  <div class="left">
+                    <h3>{{ e.institution }}</h3>
+                    <div class="meta">{{ e.degree }} &middot; {{ e.field|default:"—" }}</div>
+                    {% if e.description %}
+                      <div class="desc">{{ e.description }}</div>
+                    {% endif %}
+                  </div>
+                  <div class="right">
+                    <div>{{ e.start_date|default:"" }} — {{ e.end_date|default:"Present" }}</div>
+                    {% if e.location %}<div class="meta">{{ e.location }}</div>{% endif %}
+                  </div>
+                </div>
+              {% endfor %}
+            {% else %}
+              <div class="small">No education records yet. You will be able to add school entries from the admin / ORM later.</div>
+            {% endif %}
+          </section>
+
+          <!-- Work Experience -->
+          <section class="block" aria-labelledby="experience-heading">
+            <div class="section-title" id="experience-heading">Work Experience</div>
+
+            {% if experience %}
+              {% for job in experience %}
+                <div class="item">
+                  <div class="left">
+                    <h3>{{ job.title }} <span style="font-weight:500;color:var(--muted);">— {{ job.company }}</span></h3>
+                    <div class="meta">{{ job.location|default:"Remote" }} &middot; {{ job.type|default:"Full-time" }}</div>
+                    {% if job.responsibilities %}
+                      <div class="desc">
+                        <ul style="margin:8px 0 0 18px; padding:0; color:#cfe9d9;">
+                          {% for r in job.responsibilities %}
+                            <li>{{ r }}</li>
+                          {% endfor %}
+                        </ul>
+                      </div>
+                    {% elif job.description %}
+                      <div class="desc">{{ job.description }}</div>
+                    {% endif %}
+                  </div>
+
+                  <div class="right">
+                    <div>{{ job.start_date|default:"" }} — {{ job.end_date|default:"Present" }}</div>
+                  </div>
+                </div>
+              {% endfor %}
+            {% else %}
+              <div class="small">No work experience recorded yet. Add job entries via the ORM later.</div>
+            {% endif %}
+          </section>
+
+          <!-- Certifications -->
+          <section class="block" aria-labelledby="certs-heading">
+            <div class="section-title" id="certs-heading">Certifications</div>
+
+            {% if certifications %}
+              <div class="certs">
+                {% for c in certifications %}
+                  <div class="cert">
+                    <div>
+                      <div class="title">{{ c.title }}</div>
+                      <div class="issuer">{{ c.issuer }} &middot; {{ c.date|default:"" }}</div>
+                    </div>
+                    {% if c.url %}
+                      <div><a href="{{ c.url }}" style="color:var(--accent); text-decoration:none;">View</a></div>
+                    {% endif %}
+                  </div>
+                {% endfor %}
+              </div>
+            {% else %}
+              <div class="small">No certifications yet. You can attach certificates and issuer URLs later via the admin.</div>
+            {% endif %}
+          </section>
+
+          <!-- Footer / small notes -->
+          <div style="margin-top:18px;" class="small">
+            Last updated: {% if user.updated_at %}{{ user.updated_at|date:"F j, Y" }}{% else %}—{% endif %}
+          </div>
+        </main>
+
+      </div> <!-- .grid -->
+    </div> <!-- .card -->
+  </div> <!-- .page -->
+</body>
+</html>

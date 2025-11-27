@@ -1,0 +1,110 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>{{ post.title|default:"Blog Post" }}</title>
+
+  <link rel="stylesheet" href="{% static 'style.css' %}">
+  <link rel="stylesheet" href="{% static 'css/post.css' %}">
+</head>
+<body>
+  <nav id="navbar" role="navigation" aria-label="Primary">
+    <ul class="nav-links">
+      <li><a href="{% url 'home' %}">Home</a></li>
+      <li><a href="{% url 'profile' %}">Profile</a></li>
+      <li><a href="{% url 'projects' %}">Projects</a></li>
+      <li><a href="{% url 'blog' %}">Blog</a></li>
+    </ul>
+  </nav>
+
+  <div style="height:70px;"></div>
+
+  <main class="post-page" role="main">
+    <section class="post-card" aria-labelledby="post-title">
+      {% if post %}
+        <header class="post-header">
+          <div>
+            <h1 class="post-title" id="post-title">{{ post.title }}</h1>
+            <div class="post-meta">{{ post.published_at|date:"F j, Y" }} &middot; {{ post.reads|default:"0" }} views</div>
+          </div>
+
+          <div class="post-meta">
+            Author: <strong>{{ post.author_name|default: user.full_name|default:"Author" }}</strong>
+          </div>
+        </header>
+
+        <article class="post-content">
+          {% if post.content %}
+            {{ post.content|safe }}
+          {% else %}
+            <p><em>Full content will appear here when you add the blog post in the admin / ORM.</em></p>
+          {% endif %}
+        </article>
+
+        <div class="post-engage">
+          <form method="post" action="{% url 'blog_like' post.slug %}">
+            {% csrf_token %}
+            <button type="submit" class="like-btn">❤️ Like</button>
+            <span class="likes-count">{{ post.likes|default:"0" }} likes</span>
+          </form>
+          <div class="likes-count">{{ comments|length|default:"0" }} comments</div>
+        </div>
+
+        <section class="comments" aria-labelledby="comments-heading">
+          <h3 id="comments-heading" style="margin:0 0 12px 0;">Comments</h3>
+
+          {% if comments %}
+            {% for c in comments %}
+              <div class="comment">
+                <div>
+                  <span class="author">{{ c.author_name|default:"Anonymous" }}</span>
+                  <span class="time">{{ c.created_at|date:"F j, Y, g:i a" }}</span>
+                </div>
+                <div class="text">{{ c.body }}</div>
+              </div>
+            {% endfor %}
+          {% else %}
+            <div class="small">No comments yet. Be the first to comment.</div>
+          {% endif %}
+
+          <!-- comment form -->
+          <form class="comment-form" method="post" action="{% url 'blog_comment' post.slug %}">
+            {% csrf_token %}
+            <input type="text" name="name" placeholder="Your name (optional)" />
+            <textarea name="body" placeholder="Write your comment here..." required></textarea>
+            <div class="form-row">
+              <button type="submit">Post comment</button>
+              <div class="small" style="color:var(--muted);">Be respectful — comments are public.</div>
+            </div>
+          </form>
+        </section>
+
+      {% else %}
+        {# Dummy fallback if no post provided #}
+        <header class="post-header">
+          <div>
+            <h1 class="post-title">Dummy Blog Post</h1>
+            <div class="post-meta">Jan 1, 2025 · 0 views</div>
+          </div>
+        </header>
+
+        <article class="post-content">
+          <p>This is a placeholder full post. Replace with your blog content via your ORM.</p>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero.</p>
+        </article>
+
+        <div class="post-engage">
+          <button class="like-btn" disabled>❤️ Like</button>
+          <span class="likes-count">0 likes</span>
+        </div>
+
+        <div class="comments">
+          <div class="small">No comments yet.</div>
+        </div>
+      {% endif %}
+    </section>
+  </main>
+</body>
+</html>
