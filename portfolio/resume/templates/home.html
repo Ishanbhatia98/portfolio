@@ -1,0 +1,31 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <title>Matrix digital rain</title>
+</head>
+<body>
+    <!-- Matrix canvas -->
+    <div id="animation-wrapper">
+        <canvas id="Matrix"></canvas>
+        <div id="three-container"></div>
+    </div>
+
+    <!-- UI -->
+    <button class="pause-button" id="toggleMatrix">⏸</button>
+
+    <!-- Scripts -->
+    
+    <!-- **FIXED IMPORT MAP URLs** -->
+    <!-- <script type="module" src="https://cdn.jsdelivr.net/npm/three@0.164.0/build/three.module.js"> </script> -->
+    
+    <!-- Your custom scripts - MUST have type="module" to use the import map -->
+    <!-- Only your custom modules -->
+    <script type="module" src="{% static 'index.js' %}"></script>
+    <script type="module" src="{% static 'kinect.js' %}"></script>
+</body>
+</html>
