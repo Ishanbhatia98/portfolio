@@ -8,7 +8,7 @@ from resume.model.line_item import LineItem
 
 class Certificate(MongoBaseModel):
     meta = {'collection': 'certificate'}
-    name = StringField(required=True, max_length=100)
+    title = StringField(required=True, max_length=100)
     issuer = StringField(default="")
     date = DateTimeField()
     description = ListField(ReferenceField(LineItem), default=[])

@@ -1,0 +1,111 @@
+{% load static %}
+{# If you use django-allauth uncomment the line below and use provider_login_url #}
+{% load socialaccount %}
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Sign in — {{ site_name|default:"Portfolio" }}</title>
+
+  <!-- global theme / navbar -->
+  <link rel="stylesheet" href="{% static 'style.css' %}">
+
+  <!-- page-specific styles (create static/css/login.css or reuse your page CSS) -->
+  <link rel="stylesheet" href="{% static 'css/login.css' %}">
+</head>
+<body>
+  <!-- navbar (reuses your global style.css) -->
+  <nav id="navbar" role="navigation" aria-label="Primary">
+    <ul class="nav-links">
+      <li><a href="{% url 'home' %}">Home</a></li>
+      <li><a href="{% url 'profile' %}">Profile</a></li>
+      <li><a href="{% url 'projects' %}">Projects</a></li>
+      <li><a href="{% url 'contact' %}">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- spacer so fixed navbar doesn't cover content -->
+  <div style="height:70px;"></div>
+
+  <main class="login-page" role="main" aria-labelledby="signin-heading">
+    <section class="login-card" aria-labelledby="signin-heading">
+      <h1 id="signin-heading">Sign in</h1>
+      <p class="muted">Sign in with Google, Outlook (Microsoft), or your email/password.</p>
+
+      <!-- Django messages -->
+      {% if messages %}
+        <div class="messages" aria-live="polite">
+          {% for message in messages %}
+            <div class="msg {{ message.tags }}">{{ message }}</div>
+          {% endfor %}
+        </div>
+      {% endif %}
+
+      <!-- OAuth row -->
+      <div class="oauth-row" role="group" aria-label="Social sign in">
+        <!-- {# -------------------------
+           Option A: django-allauth
+           Uncomment if using allauth and have social providers configured:
+           <a class="oauth-btn google" href="{% provider_login_url 'google' method='oauth2' %}">Sign in with Google</a>
+           <a class="oauth-btn microsoft" href="{% provider_login_url 'azure' %}">Sign in with Microsoft</a>
+           -------------------------- #} -->
+<!-- 
+        {# -------------------------
+           Option B: social-auth-app-django (python-social-auth)
+           Typical urls:
+           <a class="oauth-btn google" href="{% url 'social:begin' 'google-oauth2' %}">Sign in with Google</a>
+           <a class="oauth-btn microsoft" href="{% url 'social:begin' 'azuread-oauth2' %}">Sign in with Outlook</a>
+           -------------------------- #} -->
+
+        {# -------------------------
+           Option C: Custom endpoints (fallback)
+           Replace 'oauth_google' and 'oauth_microsoft' with your actual view names/URLs.
+           -------------------------- #}
+        <!-- <a class="oauth-btn google" href="{% url 'oauth_google' %}">Sign in with Google</a>
+        <a class="oauth-btn microsoft" href="{% url 'oauth_microsoft' %}">Sign in with Outlook</a> -->
+      </div>
+
+      <!-- divider -->
+      <div class="divider" role="separator" aria-hidden="false"><span>or</span></div>
+
+      <!-- Email/password form -->
+      {# If you use django.contrib.auth.urls, the login URL name is 'login'. 
+         If you use allauth it's usually 'account_login'. Adjust action as needed. #}
+      <form class="auth-form" method="post" action="{% url 'login' %}" autocomplete="on" novalidate>
+        {% csrf_token %}
+
+        {# preserve next param when redirected here #}
+        {% if next %}
+          <input type="hidden" name="next" value="{{ next }}">
+        {% else %}
+          <input type="hidden" name="next" value="{{ request.GET.next|default:'' }}">
+        {% endif %}
+
+        <label for="id_email" class="label">Email</label>
+        <input id="id_email" name="username" type="email" placeholder="you@example.com" autocomplete="email" required>
+
+        <label for="id_password" class="label">Password</label>
+        <input id="id_password" name="password" type="password" placeholder="Password" autocomplete="current-password">
+
+        <div class="form-row">
+          <label class="checkbox">
+            <input type="checkbox" name="remember" value="1" aria-label="Remember me"> Remember me
+          </label>
+
+          <a class="link muted" href="{% url 'password_reset' %}">Forgot password?</a>
+        </div>
+
+        <button class="submit-btn" type="submit">Sign in</button>
+      </form>
+
+      <div class="signup-row">
+        <span class="muted">Don't have an account?</span>
+        <a class="link" href="{% url 'signup' %}">Create account</a>
+      </div>
+
+      <div class="small muted footer-note">We only use OAuth to authenticate — credentials are handled by the provider.</div>
+    </section>
+  </main>
+</body>
+</html>

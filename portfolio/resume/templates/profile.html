@@ -123,13 +123,13 @@
               {% for job in experience %}
                 <div class="item">
                   <div class="left">
-                    <h3>{{ job.title }} <span style="font-weight:500;color:var(--muted);">— {{ job.company }}</span></h3>
-                    <div class="meta">{{ job.location|default:"Remote" }} &middot; {{ job.type|default:"Full-time" }}</div>
-                    {% if job.responsibilities %}
+                    <h3>{{ job.title }} <span style="font-weight:500;color:var(--muted);">— {{ job.org }}</span></h3>
+                    <div class="meta">{{ job.location|default:"Remote" }} &middot; {{ job.role|default:"Full-time" }}</div>
+                    {% if job.description %}
                       <div class="desc">
                         <ul style="margin:8px 0 0 18px; padding:0; color:#cfe9d9;">
-                          {% for r in job.responsibilities %}
-                            <li>{{ r }}</li>
+                          {% for r in job.description %}
+                            <li>{{ r.description }}</li>
                           {% endfor %}
                         </ul>
                       </div>

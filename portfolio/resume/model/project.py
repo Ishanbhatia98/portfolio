@@ -12,7 +12,7 @@ class Project(MongoBaseModel):
     published_date = DateTimeField()
     description = ListField(ReferenceField(LineItem), default=[])
     link = StringField(default="")
-
+    #add tags
     def __str__(self):
         return self.name + " - " + self.degree
     

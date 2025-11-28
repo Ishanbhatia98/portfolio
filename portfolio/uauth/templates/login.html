@@ -1,0 +1,105 @@
+{% load static %}
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+
+  <title>Sign in — Portfolio</title>
+
+  <!-- Global theme -->
+  <link rel="stylesheet" href="{% static 'style.css' %}">
+
+  <!-- Login page styles -->
+  <link rel="stylesheet" href="{% static 'login_user.css' %}">
+</head>
+
+<body>
+  <!-- Spacing for fixed navbar -->
+  <div style="height: 70px;"></div>
+
+  <!-- MAIN CONTENT -->
+  <main class="login-page" role="main">
+
+    <section class="login-card" aria-labelledby="login-heading">
+
+      <!-- TITLE -->
+      <h1 id="login-heading">Sign in</h1>
+      <p class="muted">Access your account using email and password.</p>
+
+      <!-- MESSAGES -->
+      {% if messages %}
+        <div class="messages" aria-live="polite">
+          {% for message in messages %}
+            <div class="msg {{ message.tags }}">{{ message }}</div>
+          {% endfor %}
+        </div>
+      {% endif %}
+
+      <!-- FORM -->
+      <form class="auth-form" method="post" action="{% url 'login' %}" autocomplete="on" novalidate>
+        {% csrf_token %}
+
+        <!-- PRESERVE NEXT -->
+        {% if next %}
+          <input type="hidden" name="next" value="{{ next }}">
+        {% else %}
+          <input type="hidden" name="next" value="{{ request.GET.next|default:'' }}">
+        {% endif %}
+
+        <!-- EMAIL -->
+        <label for="id_email" class="label">Email</label>
+        <input
+          id="id_email"
+          type="email"
+          name="username"
+          placeholder="you@example.com"
+          autocomplete="email"
+          required
+        >
+
+        <!-- PASSWORD -->
+        <label for="id_password" class="label">Password</label>
+        <input
+          id="id_password"
+          type="password"
+          name="password"
+          placeholder="Password"
+          autocomplete="current-password"
+          required
+        >
+
+        <!-- ROW: remember + forgot -->
+        <div class="form-row">
+          <label class="checkbox">
+            <input type="checkbox" name="remember" value="1">
+            Remember me
+          </label>
+
+          <a class="link muted" href="{% url 'password_reset' %}">
+            Forgot password?
+          </a>
+        </div>
+
+        <!-- SUBMIT -->
+        <button class="submit-btn" type="submit">
+          Sign in
+        </button>
+      </form>
+
+      <!-- SIGNUP -->
+      <div class="signup-row">
+        <span class="muted">Don't have an account?</span>
+        <a href="{% url 'signup' %}" class="link">Create account</a>
+      </div>
+
+      <div class="footer-note muted small">
+        We never store your password — it is always encrypted & secure.
+      </div>
+
+    </section>
+  </main>
+
+</body>
+</html>

@@ -9,13 +9,13 @@ from datetime import datetime
 
 def populate_certificates():
     c1 = Certificate(
-        name="Certified Kubernetes Administrator (CKA)",
+        title="Certified Kubernetes Administrator (CKA)",
         issuer="Cloud Native Computing Foundation",
         link="https://www.cncf.io/certification/cka/"
     )
     c1.save()
     c2 = Certificate(
-        name="AWS Certified Solutions Architect – Associate",
+        title="AWS Certified Solutions Architect – Associate",
         issuer="Amazon Web Services",
         link="https://aws.amazon.com/certification/solutions-architect-associate/"
     )
@@ -30,20 +30,22 @@ def populate_schools():
     description = ListField(field=LineItem(), default=[])
     '''
     s1 = School(
-        name="University of Example",
+        institution="University of Example",
         degree="Bachelor of Science in Computer Science",
         start_date = datetime(2015, 8, 15),
         end_date = datetime(2019, 5, 20),
-        description = []
+        description = [],
+        location="Delhi"
 
     )
     s1.save()
     s2 = School(
-        name="Example Institute of Technology",
+        institution="Example Institute of Technology",
         degree="Master of Science in Software Engineering",
         start_date = datetime(2020, 9, 1),
         end_date = datetime(2022, 6, 15),
-        description = []
+        description = [],
+        location="New York"
     )
     s2.save()
 
@@ -88,7 +90,8 @@ class LineItem(MongoBaseModel):
         role="Software Engineer",
         start_date=datetime(2019, 6, 1),
         end_date=datetime(2021, 8, 31),
-        description=desc1
+        description=desc1,
+        location="surat"
     )
     w1.save()
 
@@ -109,7 +112,8 @@ class LineItem(MongoBaseModel):
         role="Senior Software Engineer",
         start_date=datetime(2021, 9, 1),
         end_date=datetime(2024, 5, 31),
-        description=desc2
+        description=desc2,
+        location="surat"
     )
     w2.save()
 

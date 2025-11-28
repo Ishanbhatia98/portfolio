@@ -17,6 +17,8 @@ from dotenv import load_dotenv
 # Load environment variables from .env file
 load_dotenv(".env.local")
 
+SITE_ID = 1
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -42,8 +44,22 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    # Required by allauth
+    'django.contrib.sites',
+
+    # allauth core
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+
+    # Social providers
+    'allauth.socialaccount.providers.google',
+    'allauth.socialaccount.providers.microsoft',
+
+    #Custom
     'resume',
-    'blog'
+    'blog',
+    'uauth'
 ]
 
 MIDDLEWARE = [
@@ -54,6 +70,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
+    'allauth.account.middleware.AccountMiddleware',
 ]
 
 ROOT_URLCONF = 'portfolio.urls'

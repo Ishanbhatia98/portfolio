@@ -13,6 +13,7 @@ class WorkExperience(MongoBaseModel):
     start_date = DateTimeField()
     end_date = DateTimeField()
     description = ListField(ReferenceField(LineItem), default=[])
+    location = StringField(default="")
 
     
     def __str__(self):
