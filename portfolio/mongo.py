@@ -10,4 +10,4 @@ def connect_db():
     load_dotenv(".env.local")
     print("Connecting to MongoDB...")
     print("Uri: ", os.getenv("MONGO_URI"))
-    connect(host=os.getenv("MONGO_URI"), alias='default')
+    connect(db='portfolio', host=os.getenv("MONGO_URI"), alias='default')
