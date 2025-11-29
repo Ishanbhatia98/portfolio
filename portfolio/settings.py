@@ -146,9 +146,9 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
 STATIC_URL = '/static/'  # Already present
-# STATICFILES_DIRS = [
-#     BASE_DIR / 'static',  # For development static files
-# ]
+STATICFILES_DIRS = [
+    BASE_DIR / 'static',  # For development static files
+]
 STATIC_ROOT = BASE_DIR / 'staticfiles'  # Directory for collected static files
 
 # Default primary key field type
