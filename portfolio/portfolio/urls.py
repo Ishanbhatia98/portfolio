@@ -31,8 +31,8 @@ urlpatterns = [
     path('home/', home.home_view, name="home"),
     path('profile/', profile.profile_view, name="profile"),
     path('projects/', projects.project_view, name="projects"),
-    # path('blog/', blog.blog_view, name="blog"),
-    # path("post/<slug:post_id>/", blog.post_view, name="blog_post")
+    path('blog/', blog.blog_view, name="blog"),
+    path("post/<slug:post_id>/", blog.post_view, name="blog_post"),
     path('contact/', contact.contact_view, name="contact"),
     path("contact/submit/", contact.contact_submit, name="contact_submit"),
 
