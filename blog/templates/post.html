@@ -7,16 +7,17 @@
   <title>{{ post.title|default:"Blog Post" }}</title>
 
   <link rel="stylesheet" href="{% static 'style.css' %}">
-  <link rel="stylesheet" href="{% static 'css/post.css' %}">
+  <link rel="stylesheet" href="{% static 'post.css' %}">
 </head>
 <body>
   <nav id="navbar" role="navigation" aria-label="Primary">
     <ul class="nav-links">
-      <li><a href="{% url 'home' %}">Home</a></li>
+      <li><a href="{% url 'home' %}">Home</a></li> 
       <li><a href="{% url 'profile' %}">Profile</a></li>
       <li><a href="{% url 'projects' %}">Projects</a></li>
-      <li><a href="{% url 'blog' %}">Blog</a></li>
-    </ul>
+      <li><a href="{% url 'blog' %}">Blog</a></li></li>
+      <li><a href="{% url 'contact' %}">Contact</a></li>
+  </ul>
   </nav>
 
   <div style="height:70px;"></div>
@@ -31,7 +32,7 @@
           </div>
 
           <div class="post-meta">
-            Author: <strong>{{ post.author_name|default: user.full_name|default:"Author" }}</strong>
+            Author: <strong>{{ post.created_by.full_name }}</strong>
           </div>
         </header>
 
@@ -44,10 +45,10 @@
         </article>
 
         <div class="post-engage">
-          <form method="post" action="{% url 'blog_like' post.slug %}">
+          <form method="post" action="#like">
             {% csrf_token %}
             <button type="submit" class="like-btn">❤️ Like</button>
-            <span class="likes-count">{{ post.likes|default:"0" }} likes</span>
+            <span class="likes-count">{{ post.likes|length|default:"0" }} likes</span>
           </form>
           <div class="likes-count">{{ comments|length|default:"0" }} comments</div>
         </div>
@@ -70,7 +71,7 @@
           {% endif %}
 
           <!-- comment form -->
-          <form class="comment-form" method="post" action="{% url 'blog_comment' post.slug %}">
+          <form class="comment-form" method="post" action="#comment">
             {% csrf_token %}
             <input type="text" name="name" placeholder="Your name (optional)" />
             <textarea name="body" placeholder="Write your comment here..." required></textarea>

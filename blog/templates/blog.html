@@ -16,12 +16,12 @@
   <!-- navbar reused from global style.css -->
   <nav id="navbar" role="navigation" aria-label="Primary">
     <ul class="nav-links">
-      <li><a href="{% url 'home' %}">Home</a></li>
+      <li><a href="{% url 'home' %}">Home</a></li> 
       <li><a href="{% url 'profile' %}">Profile</a></li>
       <li><a href="{% url 'projects' %}">Projects</a></li>
-      <li><a href="{% url 'blog' %}">Blog</a></li>
-      <li><a href="#contact">Contact</a></li>
-    </ul>
+      <li><a href="{% url 'blog' %}">Blog</a></li></li>
+      <li><a href="{% url 'contact' %}">Contact</a></li>
+  </ul>
   </nav>
 
   <!-- spacer -->
@@ -37,7 +37,7 @@
       </div>
     </div>
 
-    {% if posts %}
+
 
     <section class="posts-list" aria-live="polite">
       {% for post in posts %}
@@ -63,7 +63,7 @@
             </div>
   
             <div class="post-actions">
-              <a class="cta" href="#blogpost3">Read full post</a>
+              <a class="cta" href="{% url 'blog_post' post.id %}">Read full post</a>
             </div>
   
           </div>
@@ -71,33 +71,6 @@
       {% endfor %}
     </section>
   
-    {% else %}
-
-    <article class="post-card" role="article">
-      <div class="post-meta">
-  
-        <h2 class="post-title">
-          <a href="#blogpost" style="text-decoration:none; color:inherit;">
-            How I Built My Portfolio Website
-          </a>
-        </h2>
-  
-        <div class="post-date">2025-01-01</div>
-  
-        <div class="post-summary">
-          A behind-the-scenes write-up on how I designed and developed this portfolio —
-          from animations to backend logic and Django integrations.
-        </div>
-  
-        <div class="post-actions">
-          <a class="cta" href="{% url 'blog_post' '1' %}">Read full post</a>
-        </div>
-  
-      </div>
-    </article>
-  
-  {% endif %}
-
   </main>
 </body>
 </html>

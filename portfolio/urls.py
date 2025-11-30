@@ -16,7 +16,8 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import include, path
-from resume.views import home, profile, projects, blog, contact
+from blog.views import blog
+from resume.views import home, profile, projects, contact
 from uauth.views import login, signup, password_reset
 
 # urlpatterns = [

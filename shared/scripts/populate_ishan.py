@@ -9,6 +9,8 @@ from datetime import datetime
 from uauth.model.user import User
 from django.contrib.auth.hashers import make_password
 
+from blog.model.post import BlogPost
+
 def populate_certificates(user):
     c1 = Certificate(
         title="Crash Course on Python",
@@ -263,6 +265,17 @@ def populate_projects(user):
     # p2.save()
 
 
+def populate_blog_post(user):
+    post = BlogPost(
+        title = "Personal Portfolio",
+        summary = "Showcasing my projects, skills, and experience through a personal portfolio website built with Django.",
+        content = '''In this blog post, I will walk you through the development of my personal portfolio website using Django. The website serves as a platform to showcase my projects, skills, and professional experience.
+        ''',
+        is_published = True,
+        published_at = datetime(2025, 12, 1)
+    )
+    
+    post.save(user)
 
 def populate_user():
     user = User.objects(email="ibhatia1998@gmail.com").first() or User()
@@ -301,6 +314,7 @@ def populate_all():
     populate_skills(user)
     populate_work_experiences(user)
     populate_projects(user)
+    populate_blog_post(user)
 
 
 if __name__=='__main__':
