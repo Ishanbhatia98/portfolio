@@ -7,7 +7,8 @@ class User(Document):
     meta = {'collection': 'user'}
     created_at = DateTimeField(default=datetime.utcnow)
     updated_at = DateTimeField(default=datetime.utcnow)
-    
+
+    initals = StringField(required=False, max_length=10)
     first_name = StringField(required=False, max_length=100)
     last_name = StringField(required=False, max_length=100)
     full_name = StringField(required=False, max_length=200)
@@ -15,6 +16,7 @@ class User(Document):
     password = StringField(required=True)
     profile_picture = StringField()
 
+    resume_url = StringField()
     linkedin_url = StringField()
     github_url = StringField()
     leetcode_url = StringField()

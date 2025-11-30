@@ -52,8 +52,32 @@ html, body {
   border-bottom: 1px solid rgba(255,255,255,0.05);
   background: linear-gradient(90deg, rgba(255,255,255,0.02), transparent);
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
   flex-wrap: wrap;
+
+}
+
+
+/* Right side button */
+.resume-download {
+  margin-left: auto;
+}
+
+.download-btn {
+  padding: 8px 14px;
+  border-radius: 6px;
+  font-size: 14px;
+  background: var(--accent, #4CAF50);
+  color: white;
+  text-decoration: none;
+  transition: 0.2s ease;
+  border: 1px solid transparent;
+}
+
+.download-btn:hover {
+  background: transparent;
+  color: var(--accent, #4CAF50);
+  border-color: var(--accent, #4CAF50);
 }
 
 .avatar-wrapper {

@@ -274,6 +274,7 @@ def populate_user():
     user.github_url = "https://github.com/Ishanbhatia98"
     user.leetcode_url = "https://leetcode.com/u/ishanbhatia/"
     user.linkedin_url = "https://www.linkedin.com/in/ishan-bhatia-512aa0a2/"
+    user.resume_url = "https://drive.google.com/file/d/1L4GttaKwM7z6b4MdX1AAMhaRZgW-1kfP/view"
     user.hackerrank_url = ""
     user.full_name = "Ishan Bhatia"
     user.summary = '''Passionate software engineer with 3+ years of experience in building scalable web applications and services.

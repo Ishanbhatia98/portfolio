@@ -14,6 +14,7 @@ from resume.model.project import Project
 from uauth.model.user import User
 
 def generate_profile_context():
+    #cache this view context
     skills = Skill.objects.all()
     education = School.objects.all().order_by('-start_date')
     work_experiences = WorkExperience.objects.all().order_by('-start_date')
@@ -29,6 +30,7 @@ def generate_profile_context():
         "user": user,
         
     }
+    
     return context
 
 def profile_view(request):
