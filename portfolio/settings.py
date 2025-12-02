@@ -58,10 +58,16 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.google',
     'allauth.socialaccount.providers.microsoft',
 
+    # Django Admin
+    # 'django_mongoengine',
+    # 'django_mongoengine.mongo_admin',
+
+    'rest_framework',
+
     #Custom
     'resume',
     'blog',
-    'uauth'
+    'uauth',
 ]
 
 MIDDLEWARE = [
@@ -157,3 +163,13 @@ STATIC_ROOT = BASE_DIR / 'staticfiles'  # Directory for collected static files
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+
+
+# MONGODB
+MONGODB_DATABASES = {
+    "default": {
+        "name": "portfolio_dev",
+        "host": os.getenv("MONGO_URI"),
+        "tz_aware": True
+    }
+}

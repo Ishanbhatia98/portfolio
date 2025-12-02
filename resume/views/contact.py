@@ -8,9 +8,6 @@ def contact_view(request):
     context = {"data": "Gfg is the best"}
     return render(request, "contact.html", context)
 
-
-
-
 def contact_submit(request):
     if request.method == "POST":
         name = request.POST.get("name", "").strip()

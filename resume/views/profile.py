@@ -1,11 +1,4 @@
 from django.shortcuts import render
-
-from pprint import pprint
-
-
-
-
-
 from resume.model.skill import Skill
 from resume.model.school import School
 from resume.model.work_ex import WorkExperience
@@ -35,3 +28,6 @@ def generate_profile_context():
 
 def profile_view(request):
     return render(request, "profile.html", generate_profile_context())
+
+
+

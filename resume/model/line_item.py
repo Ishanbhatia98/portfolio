@@ -40,4 +40,15 @@ class LineItem(MongoBaseModel):
             ]
         self.save()
         return self
+    
+
+    def to_dict(self):
+        return {
+            "id": str(self.id),
+            "name": self.name,
+            "description": self.description,
+            "link": [
+                {"name": item.name, "url": item.url} for item in self.link
+            ]
+        }
 

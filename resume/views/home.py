@@ -1,23 +1,5 @@
 from django.shortcuts import render
 
-
-
-# home page
-# matrix style - red pill / blue pill
-# download cv button
-# -- or --
-# play game button - game about life events
-
-# education
-# work
-# projects(currently hidden)
-# connect with me page
-
-# linkedin, leetcode, codechef,
-# hackerrank, github, codefoces(hidden)
-
-
-
 def home_view(request):
     context = {"data": "Gfg is the best"}
     return render(request, "home.html", context)

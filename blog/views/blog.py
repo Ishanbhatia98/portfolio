@@ -1,6 +1,12 @@
 from django.shortcuts import render
-from blog.model.post import BlogPost
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework.permissions import IsAdminUser
+from rest_framework import status
+
+from blog.models.post import BlogPost
 from uauth.model.user import User
+
 def generate_blog_context():
     #cache this view context
     user = User.objects(email="ibhatia1998@gmail.com").first()
@@ -14,8 +20,20 @@ def blog_view(request):
     context = {"data": "Gfg is the best"}
     return render(request, "blog.html", generate_blog_context())
 
-def post_view(request, post_id):
-    context = {"data": "Gfg is the best"}
-    post = BlogPost.objects(id=post_id).first()
-    context["post"] = post
-    return render(request, "post.html", context)
+
+
+class BlogPostListCreateAPI(APIView):
+    permission_classes = [IsAdminUser]
+
+    def get(self, request):
+        posts = BlogPost.objects.all().order_by('-created_at')
+        post_data = [{
+            "id": str(post.id),
+            "title": post.title,
+            "content": post.content,
+            "published_at": post.published_at,
+            "is_published": post.is_published
+        } for post in posts]
+    
+    
+

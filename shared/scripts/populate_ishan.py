@@ -9,7 +9,7 @@ from datetime import datetime
 from uauth.model.user import User
 from django.contrib.auth.hashers import make_password
 
-from blog.model.post import BlogPost
+from blog.models.post import BlogPost
 
 def populate_certificates(user):
     c1 = Certificate(
