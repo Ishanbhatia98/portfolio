@@ -4,7 +4,7 @@ from blog.views import blog, post
 from resume.views import home, profile, projects, contact, skils, school, work_ex, certificate, project
 
 from uauth.views import login, signup, password_reset
-from django_mongoengine import mongo_admin
+
 
 
 
@@ -13,7 +13,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
 
     # MongoEngine admin (THIS is the correct location)
-    path("mongo_admin/", mongo_admin.site.urls),
+
     
     # Authentication (Allauth)
     path('accounts/', include('allauth.urls')),
