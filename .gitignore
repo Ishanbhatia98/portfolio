@@ -1,4 +1,4 @@
-portfolio/shared/scripts/*
+shared/scripts/populate_ishan.py
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

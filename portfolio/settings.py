@@ -173,3 +173,7 @@ MONGODB_DATABASES = {
         "tz_aware": True
     }
 }
+
+CSRF_TRUSTED_ORIGINS = [
+    "https://ishanbhatia.cv",
+]
